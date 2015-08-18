@@ -30,6 +30,7 @@ class BunyanLumberjackStream extends Writable
         @_host = require('os').hostname()
         @_tags = options.tags ? ['bunyan']
         @_type = options.type ? 'json'
+        @_env = options.env ? ''
         @_application = options.appName ? process.title
 
         @on 'finish', =>
@@ -58,6 +59,7 @@ class BunyanLumberjackStream extends Writable
         # Add some extra fields
         entry.tags ?= @_tags
         entry.source = "#{host}/#{@_application}"
+        entry.env = @_env
 
         dataFrame = {
             line: JSON.stringify(entry)
